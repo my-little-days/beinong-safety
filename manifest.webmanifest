@@ -1,0 +1,1 @@
+{"name": "農一期新場域安全資訊平台", "short_name": "北農安全資訊", "start_url": "./", "scope": "./", "display": "standalone", "background_color": "#faf7f0", "theme_color": "#155fa8", "icons": [{"src": "icon-192.png", "sizes": "192x192", "type": "image/png"}, {"src": "icon-512.png", "sizes": "512x512", "type": "image/png"}]}
