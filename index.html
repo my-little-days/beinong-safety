@@ -49,6 +49,24 @@ body.image-home .app,body.image-home #main { position:fixed!important; inset:0!i
 body.image-home .hero { position:absolute!important; inset:0!important; width:100vw!important; height:100dvh!important; max-width:none!important; max-height:none!important; min-height:0!important; margin:0!important; aspect-ratio:auto!important; overflow:hidden!important; }
 body.image-home .hero img { width:100%!important; height:100%!important; max-width:none!important; object-fit:fill!important; display:block!important; }
 body.image-home .nav {display:none!important;}
+
+/* 修正首頁圖片變形：等比例完整顯示，保留透明點擊區座標。 */
+body.image-home .hero {
+  inset: auto !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  width: min(100vw, calc(100dvh * 707 / 1536)) !important;
+  height: auto !important;
+  aspect-ratio: 707 / 1536 !important;
+  max-width: 100vw !important;
+  max-height: 100dvh !important;
+}
+body.image-home .hero img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+}
 </style></head><body><main class="app"><div id="main"></div></main><nav class="nav" id="nav" aria-label="底部導覽"></nav><script>
 const items=[["B1機車停車場", "交通與車輛", "01", "🛵"], ["消防安全管理", "消防與急救", "02", "🧯"], ["客梯與貨梯", "場域設施", "03", "🏬"], ["B1及2樓冷藏庫", "場域設施", "04", "🏬"], ["AED設置及消防編組", "消防與急救", "05", "🧯"], ["3樓電動搬運車停車場", "交通與車輛", "06", "🏬"], ["1樓零批場及拍賣場動線", "交通與車輛", "07", "🚚"], ["汽車停車場", "交通與車輛", "08", "🚚"], ["作業機具與視線死角", "作業安全", "09", "🏬"], ["B1有機垃圾處理場", "場域設施", "10", "🏬"], ["用電安全宣導", "作業安全", "11", "⚡"], ["逃生門注意事項", "消防與急救", "12", "🧯"], ["攤位用電與貨物堆放", "作業安全", "13", "⚡"], ["人車分道注意事項", "交通與車輛", "14", "🚶"], ["AED注意事項", "消防與急救", "15", "🧯"]];const sections=[["場域設施", "🏬", ["03", "10", "04"]], ["停車與動線", "🚚", ["01", "08", "06", "07", "14", "09"]], ["消防與緊急應變", "🧯", ["05", "15", "12", "02"]], ["用電與堆貨", "⚡", ["11", "13"]]];let page='home';const $=s=>document.querySelector(s);const main=$('#main');const nav=$('#nav');
 const navs=[['home','home','首頁'],['guide','map','場域導覽'],['fire','siren','緊急應變'],['all','book','講習教材'],['more','grid','更多']];
