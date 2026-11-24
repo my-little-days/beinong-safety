@@ -101,13 +101,13 @@ function guideDetail(t){
       <button class="listlink" onclick="show('guide')">← 返回場域導覽</button>
       <section aria-labelledby="truck-map-title" style="margin:16px 0">
         <h2 id="truck-map-title" style="font-size:1.15rem;margin:0 0 10px">農一期貨車卸貨動線總覽</h2>
-        <a href="truck-unloading-map.jpg" target="_blank" rel="noopener" aria-label="在新分頁開啟卸貨動線總覽大圖">
+        <a href="truck-unloading-map.jpg" data-truck-map aria-label="在新分頁開啟卸貨動線總覽大圖">
           <img src="truck-unloading-map.jpg" alt="農一期貨車卸貨動線圖，左側為一樓水果卸貨，中央為二樓蔬菜卸貨" width="1536" height="864" style="display:block;width:100%;height:auto;border-radius:12px">
         </a>
-        <p style="margin:8px 0">點圖開啟大圖，手機可用雙指放大。</p>
+        <p style="margin:8px 0">點圖開啟大圖，可用按鈕調整大小。</p>
         <div style="display:grid;gap:8px">
-          <a class="listlink" href="truck-unloading-map-1f.jpg" target="_blank" rel="noopener">放大看 1F 水果卸貨</a>
-          <a class="listlink" href="truck-unloading-map-2f.jpg" target="_blank" rel="noopener">放大看 2F 蔬菜卸貨</a>
+          <a class="listlink" href="truck-unloading-map-1f.jpg" data-truck-map>放大看 1F 水果卸貨</a>
+          <a class="listlink" href="truck-unloading-map-2f.jpg" data-truck-map>放大看 2F 蔬菜卸貨</a>
         </div>
       </section>
       <div class="video-card">
@@ -119,6 +119,44 @@ function guideDetail(t){
         <a id="truck-open" href="${routes[0][1]}">單獨開啟所選影片</a>
       </div>
     </div>`;
+    const viewer = document.createElement('dialog');
+    viewer.setAttribute('aria-label', '貨車卸貨動線大圖');
+    viewer.style.cssText = 'position:fixed;inset:0;margin:auto;width:100%;max-width:100%;height:100%;height:100dvh;max-height:100%;box-sizing:border-box;border:0;padding:0;background:white';
+    viewer.innerHTML = `<div style="display:flex;flex-direction:column;height:100%;padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom);box-sizing:border-box">
+      <div role="group" aria-label="圖片控制" style="display:flex;flex-wrap:wrap;gap:6px;padding:8px;background:#17324d">
+        <button type="button" data-zoom="0.25">＋ 放大</button>
+        <button type="button" data-zoom="-0.25">－ 縮小</button>
+        <button type="button" data-zoom="reset">還原</button>
+        <button type="button" data-close>關閉</button>
+      </div>
+      <div style="flex:1;min-height:0;overflow:auto;padding:8px">
+        <img alt="農一期貨車卸貨動線圖" style="display:block;max-width:none;height:auto;margin:0 auto">
+      </div>
+    </div>`;
+    main.append(viewer);
+    const mapImage = viewer.querySelector('img');
+    let scale = 1;
+    function setScale(value) {
+      scale = Math.min(4, Math.max(0.5, value));
+      mapImage.style.width = (scale * 100) + '%';
+      if (scale <= 1) mapImage.parentElement.scrollTo(0, 0);
+    }
+    for (const button of viewer.querySelectorAll('button')) {
+      button.style.cssText = 'font:inherit;padding:8px;min-height:44px;border:0;border-radius:6px;background:white;color:#17324d';
+      button.addEventListener('click', () => {
+        const zoom = button.dataset.zoom;
+        if (!zoom) viewer.close();
+        else setScale(zoom === 'reset' ? 1 : scale + Number(zoom));
+      });
+    }
+    for (const link of main.querySelectorAll('[data-truck-map]')) {
+      link.addEventListener('click', event => {
+        event.preventDefault();
+        mapImage.src = link.href;
+        setScale(1);
+        viewer.showModal();
+      });
+    }
     const player = document.getElementById('truck-player');
     const openLink = document.getElementById('truck-open');
     document.getElementById('truck-version').addEventListener('change',event=>{
