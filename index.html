@@ -99,6 +99,17 @@ function guideDetail(t){
     ];
     main.innerHTML = `<div class="content">${header(t)}
       <button class="listlink" onclick="show('guide')">← 返回場域導覽</button>
+      <section aria-labelledby="truck-map-title" style="margin:16px 0">
+        <h2 id="truck-map-title" style="font-size:1.15rem;margin:0 0 10px">農一期貨車卸貨動線總覽</h2>
+        <a href="truck-unloading-map.jpg" target="_blank" rel="noopener" aria-label="在新分頁開啟卸貨動線總覽大圖">
+          <img src="truck-unloading-map.jpg" alt="農一期貨車卸貨動線圖，左側為一樓水果卸貨，中央為二樓蔬菜卸貨" width="1536" height="864" style="display:block;width:100%;height:auto;border-radius:12px">
+        </a>
+        <p style="margin:8px 0">點圖開啟大圖，手機可用雙指放大。</p>
+        <div style="display:grid;gap:8px">
+          <a class="listlink" href="truck-unloading-map-1f.jpg" target="_blank" rel="noopener">放大看 1F 水果卸貨</a>
+          <a class="listlink" href="truck-unloading-map-2f.jpg" target="_blank" rel="noopener">放大看 2F 蔬菜卸貨</a>
+        </div>
+      </section>
       <div class="video-card">
         <label for="truck-version">選擇播放版本</label>
         <select id="truck-version" style="display:block;width:100%;padding:12px;margin:8px 0;font:inherit">
